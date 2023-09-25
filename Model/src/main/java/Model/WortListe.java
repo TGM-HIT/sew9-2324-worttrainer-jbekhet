@@ -65,7 +65,7 @@ public class WortListe {
      * @param wort Hier wird das WortEintrag eingegeben, welches gelöscht werden soll
      * @return true, false
      */
-    public boolean gelöscht(WortEintrag wort) {
+    public boolean geloescht(WortEintrag wort) {
 
         for (int i = 0; i < liste.size(); i++) {
             if (liste.contains(wort)) {
