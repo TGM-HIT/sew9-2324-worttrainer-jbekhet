@@ -1,4 +1,4 @@
-package Model;
+package jbekhet.Model;
 
 import java.util.ArrayList;
 import java.util.List;

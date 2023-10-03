@@ -1,4 +1,4 @@
-package Model;
+package jbekhet.Model;
 
 import java.net.MalformedURLException;
 import java.net.URL;
