@@ -11,9 +11,6 @@ import java.net.URL;
 
 public class TrainerGUI {
 
-
-
-
     private WortListe wortliste;
     private WortTrainer worttrainer;
 
@@ -26,22 +23,28 @@ public class TrainerGUI {
 
     public void start() throws MalformedURLException {
 
+        boolean schleife=true;
 
-        while (true) {
-            WortEintrag we=worttrainer.zufealligerEintrag();
+        while (schleife) {
+            WortEintrag we = worttrainer.zufealligerEintrag();
             URL url = new URL(we.getUrl());
 
             ImageIcon bildIcon = new ImageIcon(url);
 
 
             JLabel label = new JLabel();
-            label.setSize(new Dimension(20,10));
+            label.setSize(new Dimension(20, 10));
             label.setIcon(bildIcon);
 
             JLabel bildLabel = new JLabel(bildIcon);
-            bildLabel.setSize(new Dimension(20,10));
 
-            String antwort = JOptionPane.showInputDialog(label);
+
+
+
+            String antwort = JOptionPane.showInputDialog(null,bildLabel,"GIb ein Wort ein",JOptionPane.QUESTION_MESSAGE);
+
+            if (antwort != null) {
+
 
 
 /*
@@ -52,15 +55,18 @@ public class TrainerGUI {
 
 
  */
-            if (worttrainer.check(antwort)) {
-                JOptionPane.showMessageDialog(null, "Richtig!\n Richtig: " +
-                        worttrainer.getRichtige() + "\n Falsch: " +worttrainer.getFalsche()+ "\n Abgefragt: " +worttrainer.getAnzahlAbgefragterWoerter() +
-                        "\n Insgesamt: "+wortliste.leange());
+                if (worttrainer.check(antwort)) {
+                    JOptionPane.showMessageDialog(null, "Richtig!\n Richtig: " +
+                            worttrainer.getRichtige() + "\n Falsch: " + worttrainer.getFalsche() + "\n Abgefragt: " + worttrainer.getAnzahlAbgefragterWoerter() +
+                            "\n Insgesamt: " + wortliste.leange());
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsch!\nRichtig: " +
+                            worttrainer.getRichtige() + "\n Falsch: " + worttrainer.getFalsche() + "\n Abgefragt: " + worttrainer.getAnzahlAbgefragterWoerter() +
+                            "\n Insgesamt: " + wortliste.leange());
+                }
             }
             else {
-                JOptionPane.showMessageDialog(null, "Falsch!\nRichtig: " +
-                        worttrainer.getRichtige() + "\n Falsch: " +worttrainer.getFalsche()+ "\n Abgefragt: " +worttrainer.getAnzahlAbgefragterWoerter() +
-                        "\n Insgesamt: "+wortliste.leange());
+                schleife=false;
             }
         }
     }
