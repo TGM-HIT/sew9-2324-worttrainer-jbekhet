@@ -21,6 +21,11 @@ public class WortListe {
 
         this.liste=new ArrayList<>();
 
+        this.addWortEintrag("Hund","https://www.hunde-kausnacks.de/magazin/wp-content/uploads/2022/02/kleine-hunderassen-hunde-kausnack-660x330.jpg");
+        this.addWortEintrag("Affe","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0rjci0PqO-nPOPX_8wSA4PJVwQfRKKpfnZ1rfrJPvwQ&s");
+        this.addWortEintrag("Java","https://www.heise.de/imgs/18/2/4/3/3/5/8/1/Bildschirmfoto_2018-05-30_um_08-6aae3c7af906438d.png");
+        this.addWortEintrag("TGM","https://files.structurae.net/files/photos/2565/tgm/dsc8341.jpg");
+        this.addWortEintrag("Wasser","https://www.helmholtz.de/assets/helmholtz_gemeinschaft/_processed_/1/e/csm_shutterstock_793184827_Peter_Bocklandt_1920x_ed266c0350.jpg");
     }
     /**
      * Diese Methode fügt ein neues WortEintrag in die WortListe hinzu
@@ -37,6 +42,29 @@ public class WortListe {
 
 
     }
+
+
+
+    /**
+     * Diese Methode fügt ein neues WortEintrag in die WortListe hinzu
+     * @param  wort Hier wird ein Wort eingegeben
+     * @param  url Hier wird eine URL eingegeben
+     */
+    public boolean addWortEintrag(String wort, String url) {
+        // weiß nicht wie ich auf Gültigkeit überprüfe
+
+        WortEintrag worteintrag = new WortEintrag(wort,url);
+        if (!this.liste.contains(worteintrag)) {
+            this.liste.add(worteintrag);
+            return true;
+        }
+        return false;
+
+
+    }
+
+
+
     /**
      * Diese Methode gibt den Wert eines bestimmten WortEintrags in der Liste aus
      * @param index Hier wird eine Zahl eingegeben
