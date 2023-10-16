@@ -14,16 +14,20 @@ public class WortTrainer {
     private int richig;
     private int falsch;
     private String vorkommendeWoerter;
+
     private int anzahlAbgefragterWoerter;
     private int derIndex;
 
     /**
      * Leerer Konstruktor der Klasse WortTrainer
      */
-    public WortTrainer() {
-        this.liste = new WortListe();
+    public WortTrainer(WortListe liste) {
+        this.liste = liste;
+        vorkommendeWoerter="";
 
     }
+
+
     /**
      * Diese Methode gibt eine zufälligen WortEintrag in der Liste aus.
      * Des Weiteren wird die Aktuelle position zu dem zufälligen Index .
@@ -93,7 +97,9 @@ public class WortTrainer {
 
         this.abgefragt(this.getDerIndex());
 
-        if (!this.eintrag.getWort().equals(wort)) {
+
+
+        if (!eintrag.getWort().equals(wort)) {
             this.addFalsche();
             return false;
 
@@ -179,5 +185,43 @@ public class WortTrainer {
     public int getDerIndex() {
         return this.derIndex;
     }
+
+    /**
+     * Getter-Methode für die Länge der List
+     * @return  int
+     */
+    public int leange() {
+        return liste.leange();
+    }
+
+    /**
+     * Setter-Methode des Attributs richtig
+     */
+    public void setRichtige(int richtig) {
+        this.richig=richtig;
+    }
+
+    /**
+     * Setter-Methode des Attributs falsch
+     */
+    public void setFalsche(int falsch){
+        this.falsch=falsch;
+    }
+
+    /**
+     * Setter-Methode des Attributs anzahlAbgefragterWoerter
+     */
+    public void setAnzahlAbgefragterWoerter(int anzahlAbgefragterWoerter) {
+         this.anzahlAbgefragterWoerter=anzahlAbgefragterWoerter;
+    }
+
+    /**
+     * Setter-Methode des Attributs derIndex
+     */
+    public void setDerIndex (int index) {
+        this.derIndex= index;
+    }
+
+
 
 }

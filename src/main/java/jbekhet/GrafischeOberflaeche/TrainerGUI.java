@@ -1,9 +1,12 @@
 package jbekhet.GrafischeOberflaeche;
 
 import javax.swing.*;
+
 import jbekhet.Model.WortListe;
 import jbekhet.Model.WortTrainer;
 import jbekhet.Model.WortEintrag;
+import jbekhet.Persistenz.Persistenz;
+import jbekhet.Persistenz.SpeichernUndLaden;
 
 import java.awt.*;
 import java.net.MalformedURLException;
@@ -64,9 +67,10 @@ public class TrainerGUI {
                             worttrainer.getRichtige() + "\n Falsch: " + worttrainer.getFalsche() + "\n Abgefragt: " + worttrainer.getAnzahlAbgefragterWoerter() +
                             "\n Insgesamt: " + wortliste.leange());
                 }
-            }
-            else {
-                schleife=false;
+            } else {
+                schleife = false;
+                Persistenz persistenz = new SpeichernUndLaden();
+                persistenz.speichern(worttrainer);
             }
         }
     }

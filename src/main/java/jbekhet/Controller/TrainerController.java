@@ -1,22 +1,26 @@
 package jbekhet.Controller;
 
-import jbekhet.GrafischeOberflaeche.TrainerFrame;
+
 import jbekhet.GrafischeOberflaeche.TrainerGUI;
-import jbekhet.GrafischeOberflaeche.TrainerPanel;
 import jbekhet.Model.WortListe;
 import jbekhet.Model.WortTrainer;
+import jbekhet.Persistenz.Persistenz;
+import jbekhet.Persistenz.SpeichernUndLaden;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 
 public class TrainerController {
 
 
     public static void main(String[] args) {
+
+
+        Persistenz persistenz = new SpeichernUndLaden();
+        WortTrainer trainer = persistenz.laden();
+
+
         WortListe wortliste = new WortListe();
-        WortTrainer worttrainer  = new WortTrainer(wortliste);
-        TrainerGUI trainerGUI = new TrainerGUI(wortliste,worttrainer);
+        TrainerGUI trainerGUI = new TrainerGUI(wortliste,trainer);
 
 
         try {
