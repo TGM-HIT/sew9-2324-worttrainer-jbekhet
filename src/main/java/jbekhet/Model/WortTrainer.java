@@ -36,8 +36,18 @@ public class WortTrainer {
 
     public WortEintrag zufealligerEintrag() {
         int sc = (int) (Math.random() * liste.leange());
+        String wort= liste.ausgabe(sc).getWort();
+
+        if (!(this.vorkommendeWoerter.length() ==this.liste.leange())) {
+            while (abgefragt(sc) == false) {
+                sc = (int) (Math.random() * liste.leange());
+                wort = liste.ausgabe(sc).getWort();
+            }
+        }
         this.derIndex = sc;
-        return liste.ausgabe(sc);
+        eintrag = liste.ausgabe(sc);
+        this.anzahlAbgefragterWoerter++;
+        return eintrag;
 
     }
     /**
@@ -65,7 +75,7 @@ public class WortTrainer {
      * @throws IndexOutOfBoundsException wenn ein falsche Index eingegeben wurde
      */
 
-    public void abgefragt(int index) {
+    public boolean abgefragt(int index) {
         boolean hinzugefuegt = false;
         boolean nichtVorhanden;
         int gleich = 0;
@@ -77,15 +87,18 @@ public class WortTrainer {
                 vergleich = Integer.parseInt(String.valueOf(schneiden));
                 if (index == vergleich) {
                     gleich++;
+                    return false;
                 }
             }
         }
         if (gleich == 0) {
 
-            anzahlAbgefragterWoerter++;
+
+            return true;
 
         }
         vorkommendeWoerter = vorkommendeWoerter + index;
+        return true;
 
     }
     /**
@@ -194,6 +207,19 @@ public class WortTrainer {
         return liste.leange();
     }
 
+
+    /**
+     * Gibt die Statistik zurück
+     * @return  String
+     */
+    public String getStatistik() {
+        String ausgabe="\n Richtig: " +
+                this.getRichtige() + "\n Falsch: " + this.getFalsche() + "\n Abgefragt: " + this.getAnzahlAbgefragterWoerter() +
+                "\n Insgesamt: " + this.leange();
+
+        return ausgabe;
+    }
+
     /**
      * Setter-Methode des Attributs richtig
      */
@@ -212,7 +238,7 @@ public class WortTrainer {
      * Setter-Methode des Attributs anzahlAbgefragterWoerter
      */
     public void setAnzahlAbgefragterWoerter(int anzahlAbgefragterWoerter) {
-         this.anzahlAbgefragterWoerter=anzahlAbgefragterWoerter;
+        this.anzahlAbgefragterWoerter=anzahlAbgefragterWoerter;
     }
 
     /**

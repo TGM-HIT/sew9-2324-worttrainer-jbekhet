@@ -20,13 +20,13 @@ public class TrainerGUI {
 
     public TrainerGUI(WortListe wortliste, WortTrainer controller) {
         this.wortliste = wortliste;
-        this.worttrainer= new WortTrainer(wortliste);
+        this.worttrainer =controller;
 
     }
 
     public void start() throws MalformedURLException {
 
-        boolean schleife=true;
+        boolean schleife = true;
 
         while (schleife) {
             WortEintrag we = worttrainer.zufealligerEintrag();
@@ -42,30 +42,15 @@ public class TrainerGUI {
             JLabel bildLabel = new JLabel(bildIcon);
 
 
-
-
-            String antwort = JOptionPane.showInputDialog(null,bildLabel,"GIb ein Wort ein",JOptionPane.QUESTION_MESSAGE);
+            String antwort = JOptionPane.showInputDialog(null, bildLabel, "GIb ein Wort ein", JOptionPane.QUESTION_MESSAGE);
 
             if (antwort != null) {
 
 
-
-/*
-            if (worttrainer.check(antwort)) {
-                JOptionPane.showMessageDialog(null, "Richtig!\nBis jetzt hast du " +
-                        worttrainer.getRichtige() + " von " +  wortliste.leange() + " richtig.");
-            }
-
-
- */
                 if (worttrainer.check(antwort)) {
-                    JOptionPane.showMessageDialog(null, "Richtig!\n Richtig: " +
-                            worttrainer.getRichtige() + "\n Falsch: " + worttrainer.getFalsche() + "\n Abgefragt: " + worttrainer.getAnzahlAbgefragterWoerter() +
-                            "\n Insgesamt: " + wortliste.leange());
+                    JOptionPane.showMessageDialog(null, "Richtig!\n"+ worttrainer.getStatistik()); //Ausgabe als Methode erstellt
                 } else {
-                    JOptionPane.showMessageDialog(null, "Falsch!\nRichtig: " +
-                            worttrainer.getRichtige() + "\n Falsch: " + worttrainer.getFalsche() + "\n Abgefragt: " + worttrainer.getAnzahlAbgefragterWoerter() +
-                            "\n Insgesamt: " + wortliste.leange());
+                    JOptionPane.showMessageDialog(null, "Falsch!\n" +worttrainer.getStatistik());
                 }
             } else {
                 schleife = false;
@@ -74,11 +59,6 @@ public class TrainerGUI {
             }
         }
     }
-
-
-
-
-
 
 
 }
