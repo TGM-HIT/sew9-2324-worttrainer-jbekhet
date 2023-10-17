@@ -17,9 +17,7 @@ public class WortEintrag {
 
     private String url;
 
-    public WortEintrag() {
 
-    }
 
     /**
      * Konstruktor der Klasse WortEintrag
@@ -55,19 +53,29 @@ public class WortEintrag {
      */
 
 
-    public  boolean checkURLselber(String url) throws IllegalArgumentException, IndexOutOfBoundsException {
+    public  boolean checkURLselber(String url) throws IllegalArgumentException, IndexOutOfBoundsException, NullPointerException {
 
         IllegalArgumentException iae;
         IndexOutOfBoundsException ioobe;
+        NullPointerException npe;
         List<Integer> punkteanzahl = new LinkedList<>();
 
+        if (url==null) {
+            npe = new NullPointerException("Die URL ist leer");
+            throw npe;
+        }
+
         //falls die URL nicht mit https:// oder http:// beginnt
-        if ((!url.startsWith("https://")) && (!url.startsWith("http://")))
+        if ((!url.startsWith("https://")) && (!url.startsWith("http://"))) {
             iae = new IllegalArgumentException("Es muss mit https:// oder mit http:// angefangen werden");
+            throw iae;
+        }
 
         // falls die url nur http:// ist
-        if (url.length() <= 7)
+        if (url.length() <= 7) {
             ioobe = new IndexOutOfBoundsException("Es wurde eine zu kurze URL angegeben");
+            throw ioobe;
+        }
 
         for (int i = 0; i < url.length(); i++) {
             if (url.charAt(i) == '.') {
@@ -75,8 +83,10 @@ public class WortEintrag {
             }
         }
         // falls zuwenige Verzeichnise angegeben wurden
-        if (punkteanzahl.size() <= 2)
+        if (punkteanzahl.size() <= 2) {
             ioobe = new IndexOutOfBoundsException("Es sind keine bzw zu wenige Verzeichnise vorhanden");
+            throw ioobe;
+        }
 
         // ermittelt wie viele Verzeichnise das sind und schaut drauf das der Verzeichnis aus Buchstaben besteht.
         for (int i = 0; i < punkteanzahl.size(); i++) {
