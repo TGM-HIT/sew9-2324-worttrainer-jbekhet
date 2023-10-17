@@ -1,98 +1,75 @@
 package jbekhet.Persistenz;
 
-import jbekhet.Model.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import jbekhet.Model.WortListe;
+import jbekhet.Model.WortTrainer;
+import org.json.JSONObject;
 
 
 import java.io.File;
 
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+/**
+ * Die Klasse SpeichernUndLaden erbt vom Interface Persistenz und speichert bzw ladet die Statistiken in/von  einem .json file..
+ * @author (Josef Bekhet)
+ */
+
 
 public class SpeichernUndLaden implements Persistenz {
 
+    /**
+     * Diese Methode speichert die Statistiken eines WortTrainers in ein json file
+     * @param trainer Hier wird ein WortTrainer übergeben.
+     */
 
+    @Override
+    public void speichern(WortTrainer trainer) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("richtige", trainer.getRichtige());
+        jsonObject.put("falsche", trainer.getFalsche());
+        jsonObject.put("abgefragt",trainer.getAnzahlAbgefragterWoerter());
+        jsonObject.put("aktuellerIndex",trainer.getDerIndex());
 
-        private static class speicherWortEintrag implements Serializable  {
-            public String wort;
-            public String url;
+        JSONObject jsonObject2 = new JSONObject();
+        jsonObject2.put("WortTrainer", trainer);
 
+        try {
+            File jsonFile = new File("save.json");
+            FileWriter writer = new FileWriter(jsonFile);
+            writer.write(jsonObject.toString());
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+    }
 
-        private static class speicherWortListe implements Serializable {
-          public speicherWortEintrag[] swe;
+
+
+
+    /**
+     * Diese Methode ladet die Statistiken von der WortTrainer session in den WortTrainer.*/
+    @Override
+    public WortTrainer laden() {
+        JSONObject jsonObject;
+        WortListe liste = new WortListe();
+        WortTrainer trainer = new WortTrainer(liste);
+
+        try {
+            jsonObject = new JSONObject(new String(Files.readAllBytes(Paths.get(new File("save.json").toURI()))));
+            trainer.setRichtige(jsonObject.getInt("richtige"));
+            trainer.setFalsche(jsonObject.getInt("falsche"));
+            trainer.setAnzahlAbgefragterWoerter(jsonObject.getInt("abgefragt"));
+            trainer.setDerIndex(jsonObject.getInt("aktuellerIndex"));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
-        private static class speicherWortTrainer implements Serializable {
-            public speicherWortListe swl;
-            public int richtig;
-            public int falsch;
-
-            public int gesamt;
-            public int abgefragt;
-        }
-
-
-
-
-
-
-    @Override
-    public void speichern(String filename, WortTrainer wortTrainer) throws IOException {
-        ObjectMapper om = new ObjectMapper();
-        speicherWortTrainer swt= new speicherWortTrainer();
-        swt.richtig=wortTrainer.getRichtige();
-        swt.falsch= wortTrainer.getFalsche();
-        swt.abgefragt=wortTrainer.getAnzahlAbgefragterWoerter();
-        swt.gesamt= wortTrainer.leange();
-
-       WortEintrag[] wortEintrag = wortTrainer.getalleEinträge();
-       swt.= new speicherWortEintrag[wortEintrag.length];
-
+        return trainer;
+    }
 
 
     }
-
-    @Override
-    public void speichern() throws IOException {
-
-    }
-
-    @Override
-    public WortTrainer laden() throws IOException {
-        return null;
-    }
-
-    @Override
-    public WortTrainer laden(String filename) throws IOException {
-            ObjectMapper om = new ObjectMapper();
-
-            Scanner scanner = new Scanner(new File(filename));
-            String readJSON = scanner.next();
-            System.out.println(readJSON);
-            speicherWortTrainer swt= om.readValue(readJSON, speicherWortTrainer.class);
-
-           speicherWortEintrag[] swe= swt.swl.swe;
-
-            WortListe wl = new WortListe();
-            for (int i=0; i<swe.length;i++) {
-              wl.addWortEintrag(swe[i].wort,swe[i].url);
-            }
-            WortTrainer wt = new WortTrainer(wl);
-
-
-
-
-
-
-
-
-
-
-
-
-        return null;
-    }
-}
