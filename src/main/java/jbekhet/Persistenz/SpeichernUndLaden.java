@@ -1,8 +1,11 @@
 package jbekhet.Persistenz;
 
+import jbekhet.Model.WortEintrag;
 import jbekhet.Model.WortListe;
 import jbekhet.Model.WortTrainer;
+import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.*;
 
 
 import java.io.File;
@@ -14,6 +17,7 @@ import java.nio.file.Paths;
 
 /**
  * Die Klasse SpeichernUndLaden erbt vom Interface Persistenz und speichert bzw ladet die Statistiken in/von  einem .json file..
+ *
  * @author (Josef Bekhet)
  */
 
@@ -22,6 +26,7 @@ public class SpeichernUndLaden implements Persistenz {
 
     /**
      * Diese Methode speichert die Statistiken eines WortTrainers in ein json file
+     *
      * @param trainer Hier wird ein WortTrainer übergeben.
      */
 
@@ -30,11 +35,21 @@ public class SpeichernUndLaden implements Persistenz {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("richtige", trainer.getRichtige());
         jsonObject.put("falsche", trainer.getFalsche());
-        jsonObject.put("abgefragt",trainer.getAnzahlAbgefragterWoerter());
-        jsonObject.put("aktuellerIndex",trainer.getDerIndex());
+        jsonObject.put("abgefragt", trainer.getAnzahlAbgefragterWoerter());
+        jsonObject.put("aktuellerIndex", trainer.getDerIndex());
 
-        JSONObject jsonObject2 = new JSONObject();
-        jsonObject2.put("WortTrainer", trainer);
+        JSONArray jsonArray = new JSONArray();
+        for (WortEintrag eintrag : trainer.getListe()) {
+            JSONObject wortEintragJSON = new JSONObject();
+            wortEintragJSON.put("wort", eintrag.getWort());
+            wortEintragJSON.put("url", eintrag.getUrl());
+            jsonArray.put(wortEintragJSON);
+
+            JSONObject jsonToSave = new JSONObject();
+            jsonObject.put("wortListe", jsonArray);
+
+        }
+
 
         try {
             File jsonFile = new File("save.json");
@@ -48,15 +63,15 @@ public class SpeichernUndLaden implements Persistenz {
     }
 
 
-
-
     /**
-     * Diese Methode ladet die Statistiken von der WortTrainer session in den WortTrainer.*/
+     * Diese Methode ladet die Statistiken von der WortTrainer session in den WortTrainer.
+     */
     @Override
     public WortTrainer laden() {
         JSONObject jsonObject;
         WortListe liste = new WortListe();
         WortTrainer trainer = new WortTrainer(liste);
+
 
         try {
             jsonObject = new JSONObject(new String(Files.readAllBytes(Paths.get(new File("save.json").toURI()))));
@@ -65,6 +80,18 @@ public class SpeichernUndLaden implements Persistenz {
             trainer.setAnzahlAbgefragterWoerter(jsonObject.getInt("abgefragt"));
             trainer.setDerIndex(jsonObject.getInt("aktuellerIndex"));
 
+
+            JSONArray jsonArray = jsonObject.getJSONArray("wortListe");
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject wortEintragJSON = jsonArray.getJSONObject(i);
+                String wort = wortEintragJSON.getString("wort");
+                String url = wortEintragJSON.getString("url");
+                WortEintrag eintrag = new WortEintrag(wort, url);
+                liste.addWortEintrag(eintrag);
+            }
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -72,4 +99,4 @@ public class SpeichernUndLaden implements Persistenz {
     }
 
 
-    }
+}

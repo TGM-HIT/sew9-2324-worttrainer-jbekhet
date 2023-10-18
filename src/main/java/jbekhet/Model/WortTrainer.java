@@ -1,6 +1,8 @@
 package jbekhet.Model;
 
 
+import java.util.List;
+
 /**
  * Die Klasse WortTrainer verwendet die Methode WortListe um verschiedernste Vergleiche und Ausgaben zu machen.
  * @author (Josef Bekhet)
@@ -246,6 +248,10 @@ public class WortTrainer {
      */
     public void setDerIndex (int index) {
         this.derIndex= index;
+    }
+
+    public List<WortEintrag> getListe() {
+        return liste.getListe();
     }
 
 

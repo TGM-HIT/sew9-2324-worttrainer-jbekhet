@@ -17,6 +17,7 @@ public class TrainerGUI {
     private WortListe wortliste;
     private WortTrainer worttrainer;
 
+    private Persistenz persistenz = new SpeichernUndLaden();
 
     public TrainerGUI(WortListe wortliste, WortTrainer controller) {
         this.wortliste = wortliste;
@@ -54,8 +55,7 @@ public class TrainerGUI {
                 }
             } else {
                 schleife = false;
-                Persistenz persistenz = new SpeichernUndLaden();
-                persistenz.speichern(worttrainer);
+                this.persistenz.speichern(worttrainer);
             }
         }
     }
