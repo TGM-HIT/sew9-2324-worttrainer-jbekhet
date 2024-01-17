@@ -73,7 +73,7 @@ public class WortEintrag {
 
         // falls die url nur http:// ist
         if (url.length() <= 7) {
-            ioobe = new IndexOutOfBoundsException("Es wurde eine zu kurze URL angegeben");
+            ioobe = new IndexOutOfBoundsException("Es wurdee eine zu kurze URL angegeben");
             throw ioobe;
         }
 
