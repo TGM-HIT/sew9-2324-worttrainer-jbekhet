@@ -49,9 +49,9 @@ public class TrainerGUI {
 
 
                 if (worttrainer.check(antwort)) {
-                    JOptionPane.showMessageDialog(null, "Richtig!\n"+ worttrainer.getStatistik()); //Ausgabee als Methode erstellt
+                    JOptionPane.showMessageDialog(null, "Das ist Richtig!\n"+ worttrainer.getStatistik()); //Ausgabee als Methode erstellt
                 } else {
-                    JOptionPane.showMessageDialog(null, "Falsch!\n" +worttrainer.getStatistik());
+                    JOptionPane.showMessageDialog(null, "Das ist Falsch!\n" +worttrainer.getStatistik());
                 }
             } else {
                 schleife = false;

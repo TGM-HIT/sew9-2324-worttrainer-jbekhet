@@ -215,9 +215,9 @@ public class WortTrainer {
      * @return  String
      */
     public String getStatistik() {
-        String ausgabe="\n Richtig: " +
-                this.getRichtige() + "\n Falsch: " + this.getFalsche() + "\n Abgefragt: " + this.getAnzahlAbgefragterWoerter() +
-                "\n Insgesamt: " + this.leange();
+        String ausgabe="\n Die richtig Antworten: " +
+                this.getRichtige() + "\n Die falschen Antworten: " + this.getFalsche() + "\n Diese Bilder wurden abgefragt: " + this.getAnzahlAbgefragterWoerter() +
+                "\n Es gibt Insgesamt : " + this.leange() + "Bilder";
 
         return ausgabe;
     }
